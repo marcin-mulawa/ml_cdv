@@ -48,7 +48,9 @@ def calculate_stats(data: pd.DataFrame) -> pd.DataFrame:
     return describe
 
 
-def anscombe_scatter(anscombe_df: pd.DataFrame, x: List, x4: List):
+def anscombe_scatter(
+    anscombe_df: pd.DataFrame, x: List[int], x4: List[int]
+) -> plt.Figure:
     """
     Creates 4 scatter charts
     Args:
