@@ -1,11 +1,12 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+from typing import Tuple, List
 
 SAVE_DIR = os.path.join(os.getcwd(), "saved")
 
 
-def create_dataset():
+def create_dataset() -> Tuple[pd.DataFrame, List[int], List[int]]:
     """
     This function returns Anscombe's quartet y_i in pandas Dataframe and x_i in python lists
     Returns:
@@ -29,7 +30,7 @@ def create_dataset():
     return anscombe_df, x, x4
 
 
-def calculate_stats(data):
+def calculate_stats(data: pd.DataFrame) -> pd.DataFrame:
     """
     This function calculates mean, standard deviation and variance
     Args:
@@ -47,7 +48,7 @@ def calculate_stats(data):
     return describe
 
 
-def anscombe_scatter(anscombe_df, x, x4):
+def anscombe_scatter(anscombe_df: pd.DataFrame, x: List, x4: List):
     """
     Creates 4 scatter charts
     Args:
@@ -82,10 +83,7 @@ def anscombe_scatter(anscombe_df, x, x4):
 
 
 if __name__ == "__main__":
-    try:
-        os.mkdir(SAVE_DIR)
-    except:
-        pass
+    os.makedirs(SAVE_DIR, exist_ok=True)
     anscombe_df, x, x4 = create_dataset()
     describe = calculate_stats(anscombe_df)
     describe.to_csv(os.path.join(SAVE_DIR, "description.csv"))
