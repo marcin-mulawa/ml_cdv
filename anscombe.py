@@ -34,23 +34,21 @@ def calculate_stats(data: pd.DataFrame) -> pd.DataFrame:
     """
     This function calculates mean, standard deviation and variance
     Args:
-        data: pd.DataFrame
+        data: pd.DataFrame with numbers data
 
     Returns:
         describe: pd.DataFrame with calculated mean, std, variance for each column
-
     """
 
     describe = data.describe().loc[["mean", "std"]]
     variance = pd.DataFrame({"var": data.var()})
-    describe = describe.T.merge(variance, left_index=True, right_index=True)
-
-    return describe
+    return describe.T.merge(variance, left_index=True, right_index=True)
 
 
-def anscombe_scatter(anscombe_df: pd.DataFrame, x: List[int], x4: List[int]) -> plt.figure:
-    """
-    Creates 4 scatter charts
+def anscombe_scatter(
+    anscombe_df: pd.DataFrame, x: List[int], x4: List[int]
+) -> plt.figure:
+    """Creates 4 scatter charts
     Args:
         anscombe_df: pd.DataFrame
         x: list
@@ -58,7 +56,6 @@ def anscombe_scatter(anscombe_df: pd.DataFrame, x: List[int], x4: List[int]) -> 
 
     Returns:
         fig: subplot of 4 charts
-
     """
 
     # scatter plot of Anscombe's quartet data
@@ -82,10 +79,14 @@ def anscombe_scatter(anscombe_df: pd.DataFrame, x: List[int], x4: List[int]) -> 
     return fig
 
 
-if __name__ == "__main__":
+def main() -> None:
     os.makedirs(SAVE_DIR, exist_ok=True)
     anscombe_df, x, x4 = create_dataset()
     describe = calculate_stats(anscombe_df)
     describe.to_csv(os.path.join(SAVE_DIR, "description.csv"))
     fig = anscombe_scatter(anscombe_df, x, x4)
     fig.savefig(os.path.join(SAVE_DIR, "chart.jpg"))
+
+
+if __name__ == "__main__":
+    main()
